@@ -1,0 +1,62 @@
+class Paciente:
+    def __init__(self, nome, cpf, prioridade):
+        self.nome = nome
+        self.cpf = cpf
+        self.prioridade = prioridade
+
+class GestaoHospital:
+    def __init__(self):
+        self.fila = []
+
+    def adicionar_paciente(self):
+        nome = input("Nome do paciente: ")
+        cpf = input("CPF do paciente: ")
+        prioridade = int(input("Prioridade do paciente (0 - normal, 1 - leve, 2 - moderado, 3 - severo): "))
+
+        paciente = Paciente(nome, cpf, prioridade)
+        self.fila.append(paciente)
+
+    def atender_proximo_paciente(self):
+        if not self.fila:
+            print("Não há pacientes na fila.")
+            return
+
+        prioridades = [3, 2, 1, 3, 2, 3, 0]
+
+        for prioridade in prioridades:
+            for paciente in self.fila:
+                if paciente.prioridade == prioridade:
+                    self.fila.remove(paciente)
+                    print("Paciente atendido:")
+                    print("Nome:", paciente.nome)
+                    print("CPF:", paciente.cpf)
+                    print("Prioridade:", paciente.prioridade)
+                    return
+
+    def exibir_numero_pacientes(self):
+        total_pacientes = len(self.fila)
+        print("Total de pacientes na fila:", total_pacientes)
+
+
+# Código de demonstração
+gestao_hospital = GestaoHospital()
+
+while True:
+    print("\n=== Sistema de Atendimento Hospitalar ===")
+    print("1. Adicionar paciente à fila")
+    print("2. Atender próximo paciente")
+    print("3. Exibir número de pacientes na fila")
+    print("4. Sair")
+
+    opcao = input("Digite o número da operação desejada: ")
+
+    if opcao == "1":
+        gestao_hospital.adicionar_paciente()
+    elif opcao == "2":
+        gestao_hospital.atender_proximo_paciente()
+    elif opcao == "3":
+        gestao_hospital.exibir_numero_pacientes()
+    elif opcao == "4":
+        break
+    else:
+        print("Opção inválida. Por favor, tente novamente.")
